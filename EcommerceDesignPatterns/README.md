@@ -43,7 +43,7 @@ Este projeto simula o sistema de pedidos de um e-commerce, com foco no uso de pa
 
 📌 Diagrama de Classe - Model
 
-![DiagramaModel](./Diagramas/DiagramaModel.png)
+![DiagramaModel](Diagramas/DiagramaModel.png)
 
 > O modelo `Pedido` possui atributos como `id`, `valor`, `tipoFrete`, `status`, entre outros.  
 > Os enums `EstadoPedido` e `TipoFrete` definem os valores válidos para status e tipo de entrega.
@@ -56,7 +56,7 @@ Contém as regras de negócio, aplicação dos padrões e orquestração de aç�
 
 📌 Diagrama de Classe - Service
 
-![DiagramaService](./Diagramas/DiagramaService.png)
+![DiagramaService](Diagramas/DiagramaService.png)
 
 > O `PedidoService` é responsável por criar e gerenciar os pedidos, aplicar o frete adequado e controlar as transições de estado via State Pattern.
 
