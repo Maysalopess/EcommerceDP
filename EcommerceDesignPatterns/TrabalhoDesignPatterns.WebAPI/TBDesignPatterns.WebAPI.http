@@ -1,0 +1,6 @@
+@TrabalhoDesignPatterns.WebAPI_HostAddress = http://localhost:5033
+
+GET {{TrabalhoDesignPatterns.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
