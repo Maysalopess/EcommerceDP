@@ -1,50 +1,65 @@
-🛒 Sistema de E-commerce com Aplicação de Design Patterns
- Visão Geral
-Este projeto foi criado com o objetivo de exercitar o uso de Design Patterns em um contexto real. O sistema simula um e-commerce, permitindo o gerenciamento de pedidos, seus status e métodos de entrega.
+ 🛒 ECommerce Pedido Service - Projeto com Design Patterns
 
- Funcionalidades Principais:
-Gerenciamento de Status do Pedido: Os pedidos passam por diferentes etapas, como "Aguardando Pagamento", "Pago", "Enviado" e "Cancelado".
+Este projeto simula o sistema de pedidos de um e-commerce, com foco no uso de padrões de projeto aplicados à lógica de negócio, incluindo controle de status e cálculo de frete.
 
-Opções de Frete: O frete pode ser feito por transporte terrestre (caminhão) ou aéreo (avião), com taxas proporcionais ao valor do pedido (5% para terrestre e 10% para aéreo).
 
-Cancelamentos Irreversíveis: Um pedido cancelado não pode ser alterado posteriormente.
 
-Arquitetura Flexível: O sistema foi projetado para facilitar a inclusão de novos tipos de frete futuramente, sem modificar o código existente.
+ ⚙️ Funcionalidades Principais
 
- Padrões de Projeto Utilizados
+  Controle de Status do Pedido:  
+  Estados possíveis: `Aguardando Pagamento`, `Pago`, `Enviado`, `Cancelado`.
 
- State Pattern
-Utilizado para representar e controlar os diferentes estados que um pedido pode assumir. Cada estado é implementado como uma classe com comportamentos específicos, limitando as ações possíveis de acordo com o status atual.
+  Cálculo de Frete por Estratégia:  
+    🚛 Terrestre: 5% do valor do pedido  
+    ✈️ Aéreo: 10% do valor do pedido  
 
- Strategy Pattern
-Aplicado na lógica de cálculo de frete. Cada tipo de frete é tratado como uma estratégia distinta, permitindo adicionar novas opções de envio sem impactar o código já implementado.
+  Cancelamento Irreversível:  
+  Após o cancelamento, o pedido não pode mais ser alterado.
 
- Arquitetura do Sistema
-A aplicação foi desenvolvida como uma API Web utilizando ASP.NET Core com persistência de dados em PostgreSQL. A estrutura foi organizada em camadas:
+  Arquitetura Flexível:  
+  Sistema projetado para facilitar adição de novos tipos de frete e novos estados sem modificar o código já existente.
 
- 1. Camada de Repositório (Repository)
-Essa camada é responsável pelo acesso ao banco de dados. Serve como uma ponte entre a lógica de negócios e a base de dados, isolando a persistência de dados para facilitar testes, manutenção e segurança.
+ 🧠 Padrões de Projeto Utilizados
 
-📄 Modelos de Dados
-Contém as representações das entidades salvas no banco.
+ 🟨 State Pattern
+    Gerencia os estados do pedido e controla quais ações são possíveis em cada estado.  
+    Cada estado (`AguardandoPagamentoState`, `PagoState`, etc.) implementa a interface `IPedidoState`.
 
- 2. Camada de Serviço (Service)
-Nesta camada reside a regra de negócio do sistema. Aqui são feitas as transições de status dos pedidos e o cálculo do frete, utilizando os padrões de projeto:
+ 🟦 Strategy Pattern
+    Permite diferentes formas de cálculo de frete.  
+    Cada implementação (`FreteAereo`, `FreteTerrestre`) aplica uma lógica distinta e intercambiável via `IFrete`.
 
-State: Cada estado do pedido é uma classe separada, responsável por definir o que é permitido em cada fase.
 
-Strategy: Cada cálculo de frete é implementado como uma estratégia específica, permitindo troca ou adição de novas formas de envio.
 
- PedidoService:
-Cria e gerencia os pedidos.
+ 🧱 Arquitetura em Camadas
 
-Define automaticamente o estado inicial como "Aguardando Pagamento" e calcula o frete correspondente.
+    O sistema foi implementado em ASP.NET Core com persistência em PostgreSQL, dividido em:
 
-Permite atualizações apenas se o pedido ainda estiver no estado inicial. Caso contrário, bloqueia alterações.
 
-Gerencia as transições de estado com base no padrão State.
 
-Realiza conversões entre entidades de domínio, DTOs e enums para integrar com os padrões implementados.
+ 1. Model
 
- 3. Camada de Controladores (Controller)
-Responsável por receber as requisições HTTP, validá-las e encaminhá-las para os serviços adequados. Atua como uma interface entre o cliente e a lógica de negócio.
+   Contém as entidades principais e enums utilizados no banco de dados.
+
+📌 Diagrama de Classe - Model
+
+![DiagramaModel](./Diagramas/DiagramaModel.png)
+
+> O modelo `Pedido` possui atributos como `id`, `valor`, `tipoFrete`, `status`, entre outros.  
+> Os enums `EstadoPedido` e `TipoFrete` definem os valores válidos para status e tipo de entrega.
+
+
+
+ 2. Service
+
+Contém as regras de negócio, aplicação dos padrões e orquestração de ações.
+
+📌 Diagrama de Classe - Service
+
+![DiagramaService](./Diagramas/DiagramaService.png)
+
+> O `PedidoService` é responsável por criar e gerenciar os pedidos, aplicar o frete adequado e controlar as transições de estado via State Pattern.
+
+
+
+
